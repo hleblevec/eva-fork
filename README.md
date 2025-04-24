@@ -34,7 +34,17 @@ To download the dataset click [here](https://zenodo.org/records/14711527).
 
 Click on this [link](https://zenodo.org/records/15166553) to download the models.   
 
-### 1.2. Docker containers 🛠️
+### 1.2.a. Conda env 🛠️
+
+```
+conda create -n eva-env python=3.10 -y
+conda activate eva-env
+pip install h5py numpy matplotlib opencv-python pandas scipy dtaidistance \
+  pytorch-lightning torchvision torch fire wandb torchprofile onnx scikit-learn dotenv \
+  pybind11 tensorboard tensorboardX
+```
+
+### 1.2.b. Docker containers 🛠️
 
 Replace the path variable of the dataset (`ABCD_DATA_PATH`) to your installation directory. Build the docker container:
 ```
@@ -44,12 +54,14 @@ docker build -t eva-pytorch .
 Run the docker container:
 ```
 docker run --gpus all -it --rm \
-  -v /datasets/pbonazzi/sony-rap/glc_dataset/vicon_aggregate/:/workspace/data \
+  -v `ABCD_DATA_PATH`:/workspace/data \
   -e DISPLAY=$DISPLAY \
   --network host \
   --volume /tmp/.X11-unix:/tmp/.X11-unix \
   eva-pytorch
 ``` 
+
+### 1.3. OpenEB for Event PreProcessing 🛠️
 
 In your shell, inside the code directory, install [OpenEB](https://docs.prophesee.ai/stable/installation/linux_openeb.html), following these instructions :
 ```
@@ -85,7 +97,7 @@ python3 -m scripts.train --inputs_list=["dvs","rgb"] --name=fusion-model --frequ
 
 To train the event-based model: 
 ```
-python3 -m scripts.train --inputs_list=["dvs"] --name=dvs-model --frequency="dvs"
+python3 -m scripts.train --inputs_list=["dvs"] --name=dvs-model --frequency="rgb"
 ```
 
 To train the rgb-based model: 
