@@ -25,7 +25,7 @@ from torchvision import transforms
 from .subclasses import GLCFlight  
 from .transforms import Normalize3DPoints
 
-class GLCDataset(Dataset):
+class ABCDataset(Dataset):
     def __init__(self, indexes, config, transforms, ttc_mode="xy"): 
 
         self.inputs_list = config["inputs_list"]        
@@ -548,7 +548,7 @@ if __name__ == '__main__':
                      "i_rgb": transforms.Compose([])} 
     save_dir=os.path.join(data_config["in_dir"], "figures")
     
-    dataset = GLCDataset(config=data_config, indexes=true_indexes, transforms=my_transforms) 
+    dataset = ABCDataset(config=data_config, indexes=true_indexes, transforms=my_transforms) 
         
 
     calculate_stats_for_paper(dataset) 

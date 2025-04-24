@@ -17,7 +17,7 @@ seed_everything(1234, workers=True)
 # Custom imports
 from eva.engine import ModelEngine
 from eva.nn.utils.callbacks import VanishingGradientChecker, WeightHealthMonitor, WeightMagnitudeDistribution
-from eva.data.module import GLCDataModule
+from eva.data.module import ABCDataModule
 from .utils.export import save_configs, save_model_to, load_configs, get_max_epochs_and_steps
     
 def main(   
@@ -78,7 +78,7 @@ def main(
     
     # Initialize logging
     tensorboard_logger = TensorBoardLogger(name="tensorboard", save_dir=exp_config["out_dir"])
-    wandb_logger = WandbLogger(project="msand", name=name, save_dir=exp_config["out_dir"], mode="run")
+    wandb_logger = WandbLogger(project="eva", name=name, save_dir=exp_config["out_dir"], mode="run")
     torch.set_float32_matmul_precision('medium')
     
     # Loading callbacks
@@ -136,7 +136,7 @@ def main(
         q_config = config['q_config'] 
 
     # Initialize data and training module
-    data_module = GLCDataModule(config=data_config) 
+    data_module = ABCDataModule(config=data_config) 
     data_module.setup(stage="fit")
     num_samples = len(data_module.train_dataset)
     max_epochs, max_steps = get_max_epochs_and_steps(num_samples, data_config["batch_size"], max_steps, max_epochs)

@@ -8,7 +8,7 @@ from pytorch_lightning import seed_everything
 seed_everything(1234, workers=True)
 
 from eva.nn.model import EvaNet
-from eva.data.dataset import GLCDataset
+from eva.data.dataset import ABCDataset
 from eva.data.utils.utils import load_yaml_from_txt
 from eva.data.transforms import TensorToNumpy, get_transforms, move_tensor_dict_to_device
 
@@ -43,7 +43,7 @@ def load_dataset(data_config, dataset_name, transform):
     split_path = os.path.join(data_config["in_dir"], "config.yaml")
     splits = yaml.safe_load(open(split_path, "r"))
     indices = splits.get(f"{dataset_name}_indices", [])
-    dataset = GLCDataset(config=data_config, indexes=indices, transforms=transform)
+    dataset = ABCDataset(config=data_config, indexes=indices, transforms=transform)
     loader = DataLoader(dataset, num_workers=0, batch_size=1, pin_memory=True, shuffle=False)
     return loader
 

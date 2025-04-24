@@ -19,7 +19,7 @@ from sklearn.metrics import (
 
 from eva.metrics.collisions import CollisionStats
 from eva.nn.model import EvaNet
-from eva.data.dataset import GLCDataset
+from eva.data.dataset import ABCDataset
 from eva.data.utils.utils import load_yaml_from_txt
 from eva.data.transforms import TensorToNumpy, get_transforms, move_tensor_dict_to_device
 
@@ -46,7 +46,7 @@ data_config = config["data_config"]
 splits = yaml.safe_load(open(os.path.join(data_config["in_dir"], 'config.yaml'), 'r'))  
 indices = splits.get(f'{dataset_name}_indices', [])    
 transforms = get_transforms(dvs_res=data_config["dvs_res"])
-dataset = GLCDataset(config=data_config, indexes=indices, transforms=transforms, ttc_mode="xy")
+dataset = ABCDataset(config=data_config, indexes=indices, transforms=transforms, ttc_mode="xy")
 loader = DataLoader(dataset, num_workers=0, batch_size=1, pin_memory=True, shuffle=False)
 
 # de normalize

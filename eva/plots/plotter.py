@@ -12,8 +12,8 @@ from sklearn.metrics import f1_score, precision_score, recall_score, confusion_m
 
 from .position import Position 
 
-from msand.data.subclasses import RGB, IMU, DVS
-from msand.data.transforms import Normalize3DPoints 
+from eva.data.subclasses import RGB, IMU, DVS
+from eva.data.transforms import Normalize3DPoints 
 
 class Plotter:
     def __init__(self, config): 

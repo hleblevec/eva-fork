@@ -2,10 +2,10 @@ import yaml, os, pdb
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 
-from .dataset import GLCDataset
+from .dataset import ABCDataset
 from .transforms import get_transforms
 
-class GLCDataModule(pl.LightningDataModule):
+class ABCDataModule(pl.LightningDataModule):
     def __init__(self, config):
         super().__init__()
         self.config = config
@@ -25,15 +25,15 @@ class GLCDataModule(pl.LightningDataModule):
         test_dpu_indices = self.splits.get('test_dpu_indices', [])
 
         if (stage == 'fit' or stage is None) and (self.train_dataset is None or self.val_dataset is None):
-            self.train_dataset = GLCDataset(indexes=train_indices, config=self.config, transforms=self.train_transforms)
-            self.val_dataset = GLCDataset(indexes=val_indices, config=self.config, transforms=self.val_transforms)
+            self.train_dataset = ABCDataset(indexes=train_indices, config=self.config, transforms=self.train_transforms)
+            self.val_dataset = ABCDataset(indexes=val_indices, config=self.config, transforms=self.val_transforms)
 
         if stage == 'validate' or stage is None: 
-            self.val_dataset = GLCDataset(indexes=val_indices, config=self.config, transforms=self.val_transforms)
+            self.val_dataset = ABCDataset(indexes=val_indices, config=self.config, transforms=self.val_transforms)
 
         if stage == 'test' or stage is None:
-            self.test_dataset = GLCDataset(indexes=test_indices, config=self.config, transforms=self.val_transforms) 
-            self.test_dpu_indices = GLCDataset(indexes=test_dpu_indices, config=self.config, transforms=self.val_transforms) 
+            self.test_dataset = ABCDataset(indexes=test_indices, config=self.config, transforms=self.val_transforms) 
+            self.test_dpu_indices = ABCDataset(indexes=test_dpu_indices, config=self.config, transforms=self.val_transforms) 
 
     def train_dataloader(self):
         return DataLoader(self.train_dataset, num_workers=0, batch_size=self.batch_size, shuffle=True, pin_memory=True)
