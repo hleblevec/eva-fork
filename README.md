@@ -1,6 +1,6 @@
-# 💥🔵 Low-Latency Event-based Obstacle Avoidance on a FPGA. 💥🔵
+# Low-Latency Obstacle Avoidance on a FPGA. 🔵
 
-## [🗂️ ABCD Dataset](https://zenodo.org/records/14711527)
+## [🛢 Dataset](https://zenodo.org/records/14711527) [📝 Paper](https://arxiv.org/pdf/2504.10400)
 
 ## References & Citation ✉️ 
 
