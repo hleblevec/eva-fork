@@ -15,7 +15,7 @@ Code base to reproduce results in :
 } 
 @article{Bonazzi2025IJCNN,
     author    = {Bonazzi, Pietro and Vogt, Christian and Jost, Michael and Qin, Haotong and Khacef, Lyes and Paredes-Valles, Federico and Magno, Michele},
-    title     = {Fusing Events and Frames with Self-Attention Network for Ball Collision Detection.},
+    title     = {RGB-Event Fusion with Self-Attention for Collision Prediction.},
     journal = {International Joint Conference on Neural Networks (IJCNN)},
     month     = {June},
     year      = {2025}, 
