@@ -1,6 +1,6 @@
 # Low-Latency Obstacle Avoidance on a FPGA. 🔵
 
-## [🛢 Dataset](https://zenodo.org/records/14711527) [📝 Paper](https://arxiv.org/pdf/2504.10400)
+## [🛢 Dataset](https://zenodo.org/records/14711527) [📝 Paper](https://openaccess.thecvf.com/content/CVPR2025W/EventVision/html/Bonazzi_Towards_Low-Latency_Event-based_Obstacle_Avoidance_on_a_FPGA-Drone_CVPRW_2025_paper.html)
 
 ## References & Citation ✉️ 
 
