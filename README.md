@@ -6,13 +6,15 @@
 
 Code base to reproduce results in :
 ``` 
-@article{Bonazzi2025CVPRW,
+@InProceedings{Bonazzi_2025_CVPR,
     author    = {Bonazzi, Pietro and Vogt, Christian and Jost, Michael and Khacef, Lyes and Paredes-Valles, Federico and Magno, Michele},
-    title     = {Towards Low-Latency Event-based Obstacle Avoidance on a FPGA-Drone.},
-    journal   = {IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshop (CVPRW)}, 
+    title     = {Towards Low-Latency Event-based Obstacle Avoidance on a FPGA-Drone},
+    booktitle = {Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR) Workshops},
     month     = {June},
-    year      = {2025}, 
-} 
+    year      = {2025},
+    pages     = {4938-4946}
+}
+
 @article{Bonazzi2025IJCNN,
     author    = {Bonazzi, Pietro and Vogt, Christian and Jost, Michael and Qin, Haotong and Khacef, Lyes and Paredes-Valles, Federico and Magno, Michele},
     title     = {RGB-Event Fusion with Self-Attention for Collision Prediction.},
