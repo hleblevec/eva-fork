@@ -2,32 +2,32 @@ import torch
 import torch.nn as nn
 import pdb 
 
-from .layers import SelfAttentionBlock, ConvBlock, LinearBlock, ResidualBlock, xilinx_leaky_relu_neg_slope
+from .layers import SelfAttentionBlock, ConvBlock, LinearBlock, ResidualBlock, AvgPoolingBlock, xilinx_leaky_relu_neg_slope
 
 class Eva1Branch(nn.Module):
     def __init__(self, in_dim, out_dim, configs, bias, verbose=False):
         super().__init__() 
         self.branch = nn.Sequential(
             ConvBlock(in_dim, 48, configs, stride=1, padding=0, bias=bias),
-            nn.AvgPool2d(2,2),
+            AvgPoolingBlock(2, 2, 0, configs),
             nn.Dropout(0.5),
             
             ConvBlock(48, 56, configs, stride=1, padding=0, bias=bias),
             nn.Dropout(0.5),
             
             ConvBlock(56, 64, configs, stride=1, padding=0, bias=bias),
-            nn.AvgPool2d(2,2),
+            AvgPoolingBlock(2, 2, 0, configs),
             nn.Dropout(0.5),
             
             ConvBlock(64, 72, configs, stride=1, padding=0, bias=bias),
             nn.Dropout(0.5),
             
             ConvBlock(72, 84, configs, stride=1, padding=0, bias=bias),
-            nn.AvgPool2d(2,2),
+            AvgPoolingBlock(2, 2, 0, configs),
             nn.Dropout(0.5),
             
             ConvBlock(84, 96, configs, stride=1, padding=0, bias=bias),
-            nn.AvgPool2d(2,2),
+            AvgPoolingBlock(2, 2, 0, configs),
             nn.Dropout(0.5),
             nn.Flatten(),
             

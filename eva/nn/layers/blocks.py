@@ -6,6 +6,7 @@ import torch.nn.init as init
 
 from .xilinx_attn import SelfAttention
 
+from .quantizer.quant_brevitas import BrevitasQuantConv2d, BrevitasQuantLinear, BrevitasQuantReLU, BrevitasTruncAvgPool2d
 from .mp import MPConv2d, MPLinear, mp_sum
 from ..binarization.dorefa import DoReFaConv2d, DoReFaLinear 
 from ..binarization.irnet import BiLinearIRNet, BiConv2dIRNet 
@@ -21,7 +22,8 @@ conv_types = {
     "dorefa_binarization": DoReFaConv2d,
     "irnet_binarization": BiConv2dIRNet,
     "ours_binarization" : BiTestConv2d, 
-    "reactnet_binarization": BiReactNetConv2d 
+    "reactnet_binarization": BiReactNetConv2d,
+    "brevitas" : BrevitasQuantConv2d,
 }
     
     
@@ -76,7 +78,8 @@ lin_types = {
     "dorefa_binarization": DoReFaLinear,
     "irnet_binarization": BiLinearIRNet,
     "ours_binarization" : BiTestLinear, 
-    "reactnet_binarization": BiReactNetLinear 
+    "reactnet_binarization": BiReactNetLinear,
+    "brevitas" : BrevitasQuantLinear
 }
 
 class LinearBlock(nn.Module):
@@ -98,6 +101,22 @@ class LinearBlock(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.linear_block(x)
 
+
+#AvgPoolingBlock
+pool_types = {
+    "normal": nn.AvgPool2d,
+    "brevitas": BrevitasTruncAvgPool2d,
+}
+
+class AvgPoolingBlock(nn.Module):
+    def __init__(self, kernel_size: int, stride: int, padding: int, config: dict):
+        super().__init__()
+        
+        method = config["block_method"]
+        self.pool = pool_types[method](kernel_size=kernel_size, stride=stride, padding=padding)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.pool(x)
 
 class SelfAttentionBlock(nn.Module):
     def __init__(self, in_dim: int, dropout_rate: float = 0.0):
