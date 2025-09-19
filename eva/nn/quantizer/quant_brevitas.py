@@ -3,7 +3,7 @@ from torch import nn
 from brevitas.nn import QuantConv2d, QuantLinear, QuantReLU, QuantIdentity, TruncAvgPool2d
 
 from brevitas.core.restrict_val import RestrictValueType
-from brevitas.quant import Int8ActPerTensorFloat, Int8WeightPerTensorFloat, Uint8ActPerTensorFloat, IntBias, TruncTo8bit
+from brevitas.quant import Int8ActPerTensorFloat, Int8WeightPerTensorFloat, Uint8ActPerTensorFloat, Int8Bias, TruncTo8bit
 
 
 class CommonIntWeightPerChannelQuant(Int8WeightPerTensorFloat):
@@ -47,7 +47,7 @@ class BrevitasQuantConv2d(nn.Module):
             stride=stride,
             padding=padding,
             bias=bias,
-            bias_quant=IntBias,
+            bias_quant=Int8Bias,
             weight_bit_width=4, 
             weight_quant=CommonIntWeightPerChannelQuant
         )
@@ -62,7 +62,7 @@ class BrevitasQuantLinear(nn.Module):
             in_features=in_features,
             out_features=out_features,
             bias=bias,
-            bias_quant=IntBias,
+            bias_quant=Int8Bias,
             weight_bit_width=4,
             weight_quant=CommonIntWeightPerChannelQuant,
         )
