@@ -49,7 +49,7 @@ class BrevitasQuantConv2d(nn.Module):
             bias=bias,
             bias_quant=IntBias,
             weight_bit_width=4, 
-            weight_quant=CommonIntWeightPerTensorQuant
+            weight_quant=CommonIntWeightPerChannelQuant
         )
 
     def forward(self, x):
@@ -64,7 +64,7 @@ class BrevitasQuantLinear(nn.Module):
             bias=bias,
             bias_quant=IntBias,
             weight_bit_width=4,
-            weight_quant=CommonIntWeightPerTensorQuant,
+            weight_quant=CommonIntWeightPerChannelQuant,
         )
 
     def forward(self, x):

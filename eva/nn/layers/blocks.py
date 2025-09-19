@@ -6,7 +6,7 @@ import torch.nn.init as init
 
 from .xilinx_attn import SelfAttention
 
-from .quantizer.quant_brevitas import BrevitasQuantConv2d, BrevitasQuantLinear, BrevitasQuantReLU, BrevitasTruncAvgPool2d
+from ..quantizer.quant_brevitas import BrevitasQuantConv2d, BrevitasQuantLinear, BrevitasQuantReLU, BrevitasTruncAvgPool2d
 from .mp import MPConv2d, MPLinear, mp_sum
 from ..binarization.dorefa import DoReFaConv2d, DoReFaLinear 
 from ..binarization.irnet import BiLinearIRNet, BiConv2dIRNet 
