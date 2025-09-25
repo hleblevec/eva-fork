@@ -40,6 +40,8 @@ class CommonUintActQuant(Uint8ActPerTensorFloat):
 class BrevitasQuantConv2d(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0, bias=False):
         super(BrevitasQuantConv2d, self).__init__()
+        self.bias = bias
+        self.quant = QuantIdentity(bit_width=4, act_quant=CommonIntActQuant)
         self.conv = QuantConv2d(
             in_channels=in_channels,
             out_channels=out_channels,
@@ -53,11 +55,15 @@ class BrevitasQuantConv2d(nn.Module):
         )
 
     def forward(self, x):
+        if self.bias:
+            x = self.quant(x)
         return self.conv(x)
 
 class BrevitasQuantLinear(nn.Module):
     def __init__(self, in_features, out_features, bias=True):
         super(BrevitasQuantLinear, self).__init__()
+        self.bias = bias
+        self.quant = QuantIdentity(bit_width=4, act_quant=CommonIntActQuant)
         self.linear = QuantLinear(
             in_features=in_features,
             out_features=out_features,

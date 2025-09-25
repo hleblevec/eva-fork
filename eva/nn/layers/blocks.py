@@ -47,12 +47,17 @@ class ResidualBlock(nn.Module):
     
 class ConvBlock(nn.Module):
     def __init__(self, in_dim: int, out_dim: int, config: dict, stride: int = 2, padding: int=1, bias = None, 
-                 activation: nn.Module=nn.LeakyReLU(xilinx_leaky_relu_neg_slope)):
+                 activation: nn.Module=nn.LeakyReLU(xilinx_leaky_relu_neg_slope), first=False):
         super().__init__()
         
         method = config["block_method"]
         precision = config["precision"] 
         
+        if method == "brevitas":
+            self.activation = BrevitasQuantReLU()
+        else:
+            self.activation = activation
+
         self.conv = conv_types[method](  
                     in_channels=in_dim,
                     out_channels=out_dim,
@@ -65,7 +70,7 @@ class ConvBlock(nn.Module):
         self.conv_block = nn.Sequential(
             self.conv,
             nn.BatchNorm2d(out_dim),   
-            activation, 
+            self.activation, 
         ) 
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -89,12 +94,17 @@ class LinearBlock(nn.Module):
 
         method = config["block_method"]
         precision = config["precision"] 
+
+        if method == "brevitas":
+            self.activation = BrevitasQuantReLU()
+        else:
+            self.activation = activation
         
         self.linear = lin_types[method](in_dim, out_dim, bias=bias)
 
         layers = [self.linear]
-        if activation:
-            layers.append(activation) 
+        if self.activation:
+            layers.append(self.activation) 
 
         self.linear_block = nn.Sequential(*layers)
 

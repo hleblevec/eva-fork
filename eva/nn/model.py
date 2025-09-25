@@ -31,10 +31,10 @@ class Eva1Branch(nn.Module):
             nn.Dropout(0.5),
             nn.Flatten(),
             
-            LinearBlock(384, 128, configs, activation=nn.LeakyReLU(xilinx_leaky_relu_neg_slope), bias=bias),
+            LinearBlock(384, 128, configs, bias=bias),
             nn.Dropout(0.5),
             
-            LinearBlock(128, out_dim, configs, activation=nn.LeakyReLU(xilinx_leaky_relu_neg_slope), bias=bias),
+            LinearBlock(128, out_dim, configs, bias=bias),
             nn.Dropout(0.5),
         )
         self.verbose = verbose
