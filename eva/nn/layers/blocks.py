@@ -94,20 +94,15 @@ class LinearBlock(nn.Module):
 
         method = config["block_method"]
         precision = config["precision"] 
-
-        if method == "brevitas":
-            self.activation = BrevitasQuantReLU()
-        else:
-            self.activation = activation
         
         self.linear = lin_types[method](in_dim, out_dim, bias=bias)
 
         layers = [self.linear]
-        if self.activation:
+        if activation:
             if method == "brevitas":
                 layers.append(BrevitasQuantReLU())
             else:
-                layers.append(self.activation) 
+                layers.append(activation) 
 
         self.linear_block = nn.Sequential(*layers)
 
