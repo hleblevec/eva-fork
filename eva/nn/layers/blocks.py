@@ -104,7 +104,10 @@ class LinearBlock(nn.Module):
 
         layers = [self.linear]
         if self.activation:
-            layers.append(self.activation) 
+            if method == "brevitas":
+                layers.append(BrevitasQuantReLU())
+            else:
+                layers.append(self.activation) 
 
         self.linear_block = nn.Sequential(*layers)
 
